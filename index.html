@@ -180,7 +180,7 @@
           <h3>Sådan vil jeg gøre</h3>
           <ul>
             <li><strong>Stikprøver:</strong> starte med fx 100 bier i højsæsonen.</li>
-            <li><strong>Analyse:</strong> OpenCV finder bierne, YOLO spotter varroaerne.</li>
+            <li><strong>Analyse:</strong> Når en bi flyver gennem tunnelen, tager kameraet et billede i høj opløsning. OpenCV (et billedbehandlingsværktøj) bruges først til at finde selve bien i billedet, så baggrunden ignoreres. Derefter bruger systemet YOLO (en AI-model til objektdetektion) til at lede efter varroamider. Disse små, mørkebrune parasitter sidder ofte på bienes ryg eller mellem kropssegmenterne, og AI’en er trænet til at genkende dem ud fra form og farve. Hvis en mide registreres, gemmes billedet med dato, tid og en markering af, hvor miden sidder. På den måde kan udviklingen af varroa-niveauet følges over tid uden at åbne bistadet.</li>
             <li><strong>Lagring:</strong> resultater gemmes i en SQLite-database, så udviklingen kan følges over tid.</li>
             <li><strong>Visning:</strong> når systemet kører, laver jeg et link til de billeder, hvor der er fundet varroa.</li>
           </ul>
@@ -190,7 +190,6 @@
           </p>
         </article>
 
-        <!-- Højre kolonne -->
         <aside class="card col-4" aria-label="Projektstatus">
           <div class="pill"><strong>Projektstatus</strong></div>
           <div class="stat">
@@ -210,7 +209,6 @@
             <strong>~100 bier / højsæson</strong>
           </div>
 
-          <!-- Nyt felt: DIY open source -->
           <div class="pill" style="margin-top:20px;"><strong>DIY open source</strong></div>
           <p class="muted" style="margin-top:8px">Filer (kommer senere)</p>
         </aside>
@@ -246,7 +244,6 @@
     </footer>
   </div>
 
-  <!-- Popup HTML -->
   <div id="popup" class="popup" onclick="closePopup()">
     <span class="close" onclick="closePopup()">&times;</span>
     <img class="popup-content" id="popup-img" alt="Billede i fuld størrelse">
