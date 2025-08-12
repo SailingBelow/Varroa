@@ -81,7 +81,6 @@
     .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
     footer{opacity:.8; font-size:14px; padding:32px 0 60px 0}
 
-    /* Lille billede med popup */
     .img-small{
       max-width: 240px;
       width: 100%;
@@ -97,7 +96,6 @@
       transform: scale(1.03);
     }
 
-    /* Popup billede */
     .popup{
       display: none;
       position: fixed;
@@ -151,9 +149,9 @@
       <div class="mesh" aria-hidden="true"></div>
       <div class="hero">
         <span class="kicker">Bier • Sundhed • AI</span>
-        <h1>Kan man spotte varroamider automatisk? </h1>
+        <h1>Kan man spotte varroamider automatisk?</h1>
         <p class="lead">
-          Det er præcis det, jeg prøver at finde ud af med mit DIY open source projekt: nærbilleder i en lille indgangstunnel, analyse med computer, og løbende overblik uden at åbne Bistaden.
+          Det er præcis det, jeg prøver at finde ud af med mit DIY open source projekt: nærbilleder i en lille indgangstunnel, analyse med computer, og løbende overblik uden at åbne bistaden.
         </p>
         <div class="cta">
           <a class="btn" href="#projekt">Læs om projektet</a>
@@ -168,6 +166,10 @@
           <h3>Projektbeskrivelse</h3>
           <p>
             Jeg er i gang med at bygge et system, der kan genkende varroamider på bier ved stadeindgangen – men teknikken kunne også bruges til at opdage andre insekter, som fx den asiatiske hveps.
+          </p>
+
+          <p>
+            Det er et <strong>DIY open source projekt</strong>, hvor jeg bruger GitHub til at dokumentere og senere dele filer, kode og metoder. Målet er, at andre biavlere kan hente materialet og selv prøve kræfter med at udvikle og teste systemer til automatisk detektion af varroamiden.
           </p>
 
           <img src="bi.jpeg" alt="Billede af en bi fra de første kameratests" class="img-small" onclick="openPopup(this.src)" />
@@ -242,7 +244,6 @@
     </footer>
   </div>
 
-  <!-- Popup HTML -->
   <div id="popup" class="popup" onclick="closePopup()">
     <span class="close" onclick="closePopup()">&times;</span>
     <img class="popup-content" id="popup-img">
@@ -250,7 +251,6 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
-
     function openPopup(src) {
       document.getElementById("popup").style.display = "block";
       document.getElementById("popup-img").src = src;
@@ -261,4 +261,3 @@
   </script>
 </body>
 </html>
-
