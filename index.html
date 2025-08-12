@@ -115,6 +115,7 @@
       display: block;
       max-width: 90%;
       max-height: 80vh;
+      border-radius: 8px;
     }
     .close{
       position: absolute;
@@ -125,9 +126,7 @@
       font-weight: bold;
       cursor: pointer;
     }
-    .close:hover{
-      color: #bbb;
-    }
+    .close:hover{ color: #bbb; }
 
     @media (min-width: 800px){.hero{padding:72px 56px 56px 56px}}
     @media (min-width: 900px){
@@ -191,6 +190,7 @@
           </p>
         </article>
 
+        <!-- Højre kolonne -->
         <aside class="card col-4" aria-label="Projektstatus">
           <div class="pill"><strong>Projektstatus</strong></div>
           <div class="stat">
@@ -209,6 +209,10 @@
             <span>Plan for stikprøve</span>
             <strong>~100 bier / højsæson</strong>
           </div>
+
+          <!-- Nyt felt: DIY open source -->
+          <div class="pill" style="margin-top:20px;"><strong>DIY open source</strong></div>
+          <p class="muted" style="margin-top:8px">Filer (kommer senere)</p>
         </aside>
       </section>
 
@@ -245,7 +249,7 @@
   <!-- Popup HTML -->
   <div id="popup" class="popup" onclick="closePopup()">
     <span class="close" onclick="closePopup()">&times;</span>
-    <img class="popup-content" id="popup-img">
+    <img class="popup-content" id="popup-img" alt="Billede i fuld størrelse">
   </div>
 
   <script>
