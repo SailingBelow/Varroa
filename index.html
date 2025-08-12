@@ -81,9 +81,9 @@
     .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
     footer{opacity:.8; font-size:14px; padding:32px 0 60px 0}
 
-    /* Billede: lille + centreret */
+    /* Lille billede med popup */
     .img-small{
-      max-width: 360px;
+      max-width: 240px;
       width: 100%;
       height: auto;
       display: block;
@@ -97,25 +97,36 @@
       transform: scale(1.03);
     }
 
-    /* Popup-stil */
-    .lightbox{
-      display:none;
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      background:rgba(0,0,0,0.85);
-      align-items:center;
-      justify-content:center;
-      z-index:999;
+    /* Popup billede */
+    .popup{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
     }
-    .lightbox img{
-      max-width:90%;
-      max-height:90%;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    .popup-content{
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80vh;
     }
-    .lightbox:target{
-      display:flex;
+    .close{
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover{
+      color: #bbb;
     }
 
     @media (min-width: 800px){.hero{padding:72px 56px 56px 56px}}
@@ -152,7 +163,6 @@
     </header>
 
     <main>
-      <!-- Projektbeskrivelse -->
       <section id="projekt" class="grid">
         <article class="card col-8">
           <h3>Projektbeskrivelse</h3>
@@ -160,10 +170,7 @@
             Jeg er i gang med at bygge et system, der kan genkende varroamider på bier ved stadeindgangen – men teknikken kunne også bruges til at opdage andre insekter, som fx den asiatiske hveps.
           </p>
 
-          <!-- Klikbart billede -->
-          <a href="#billede-popup">
-            <img src="bi.jpeg" alt="Billede af en bi fra de første kameratests" class="img-small" loading="lazy" />
-          </a>
+          <img src="bi.jpg" alt="Billede af en bi fra de første kameratests" class="img-small" onclick="openPopup(this.src)" />
 
           <p>
             Bierne går igennem en lille tunnel, hvor jeg tager nærbilleder, og bagefter analyserer en computer billederne for mider.
@@ -205,7 +212,6 @@
         </aside>
       </section>
 
-      <!-- Kort FAQ / noter -->
       <section class="grid" aria-label="Noter">
         <article class="card col-12">
           <h3>Kort fortalt</h3>
@@ -218,7 +224,6 @@
         </article>
       </section>
 
-      <!-- Kontakt -->
       <section class="grid" id="kontakt" aria-label="Kontakt">
         <article class="card col-12">
           <h3>Kontakt</h3>
@@ -237,14 +242,22 @@
     </footer>
   </div>
 
-  <!-- Popup / Lightbox -->
-  <div id="billede-popup" class="lightbox" onclick="window.location='#'">
-    <img src="bi.jpeg" alt="Billede af en bi i fuld størrelse" />
+  <!-- Popup HTML -->
+  <div id="popup" class="popup" onclick="closePopup()">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <img class="popup-content" id="popup-img">
   </div>
 
   <script>
-    // sæt årstal i footer
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    function openPopup(src) {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("popup-img").src = src;
+    }
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
   </script>
 </body>
 </html>
