@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Varroa-miden – Projekt & Overvågning</title>
+  <meta name="description" content="DIY open source projekt: Kan man automatisk spotte varroamider ved stadeindgangen? Kameratunnel, OpenCV + YOLO og lagring i SQLite." />
+  <style>
+    :root{
+      --bg: #0b1020;
+      --card: #121832;
+      --text: #e9eefc;
+      --muted: #a9b4d6;
+      --accent: #7aa2ff;
+      --accent-2:#5b86ff;
+      --ok:#6ee7a8;
+      --warn:#ffd166;
+      --bad:#ff6b6b;
+      --maxw: 1024px;
+      --radius: 16px;
+      --shadow: 0 10px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 10% 0%, #0f1734 0%, var(--bg) 60%);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:24px}
+    header{
+      position:relative;
+      overflow:hidden;
+      border-radius:calc(var(--radius) + 8px);
+      background: linear-gradient(135deg, #0e1a3d 0%, #0b1020 60%);
+      box-shadow:var(--shadow);
+    }
+    .hero{
+      padding:64px 28px 52px 28px;
+      display:grid;
+      gap:18px;
+    }
+    .kicker{
+      font-size:14px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    h1{margin:0;font-size: clamp(28px, 5vw, 44px); line-height:1.15}
+    .lead{font-size: clamp(16px, 2.2vw, 20px); color:var(--muted); max-width: 62ch}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:8px}
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:12px 16px; border-radius:12px; font-weight:600;
+      background:var(--accent); color:#0b1020; box-shadow:var(--shadow);
+    }
+    .btn.alt{
+      background:transparent; color:var(--text); outline:1px solid #2a3869;
+    }
+    .grid{display:grid; gap:20px; margin-top:26px; grid-template-columns: repeat(12, 1fr);}
+    .card{
+      background: linear-gradient(180deg, #121832 0%, #0f1530 100%);
+      border:1px solid #1f2a52;
+      border-radius:var(--radius);
+      padding:22px; box-shadow:var(--shadow);
+    }
+    .card h3{margin-top:0; margin-bottom:8px}
+    .muted{color:var(--muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border-radius:999px; padding:6px 10px; font-size:13px; line-height:1;
+      background:#0d1536; border:1px solid #233066; color:var(--muted)
+    }
+    .stat{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 0; border-bottom:1px dashed #243262}
+    .stat:last-child{border-bottom:0}
+    .dot{width:10px; height:10px; border-radius:50%}
+    .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
+    footer{opacity:.8; font-size:14px; padding:32px 0 60px 0}
+    img{max-width:100%; border-radius:8px; margin-top:12px; box-shadow:0 2px 8px rgba(0,0,0,.3)}
+    @media (min-width: 800px){.hero{padding:72px 56px 56px 56px}}
+    @media (min-width: 900px){
+      .col-8{grid-column: span 8}
+      .col-4{grid-column: span 4}
+      .col-6{grid-column: span 6}
+      .col-12{grid-column: span 12}
+    }
+    @media (max-width: 899px){.col-8,.col-4,.col-6,.col-12{grid-column:1 / -1}}
+    .mesh{
+      position:absolute; inset:-2px; pointer-events:none; opacity:.12;
+      background-image: radial-gradient(#7aa2ff 0.6px, transparent 0.6px);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,0));
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="hero">
+        <span class="kicker">Bier • Sundhed • AI</span>
+        <h1>Kan man spotte varroamider automatisk? </h1>
+        <p class="lead">
+          Det er præcis det, jeg prøver at finde ud af med mit DIY open source projekt: nærbilleder i en lille indgangstunnel, analyse med computer, og løbende overblik uden at åbne Bistaden.
+        </p>
+        <div class="cta">
+          <a class="btn" href="#projekt">Læs om projektet</a>
+          <a class="btn alt" href="#kontakt">Kontakt</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Projektbeskrivelse -->
+      <section id="projekt" class="grid">
+        <article class="card col-8">
+          <h3>Projektbeskrivelse</h3>
+          <p>
+            Jeg er i gang med at bygge et system, der kan genkende varroamider på bier ved stadeindgangen – men teknikken kunne også bruges til at opdage andre insekter, som fx den asiatiske hveps.
+          </p>
+
+          <img src="bi.jpg" alt="Billede af en bi fra de første kameratests" />
+
+          <p>
+            Bierne går igennem en lille tunnel, hvor jeg tager nærbilleder, og bagefter analyserer en computer billederne for mider.
+            Her er billeder fra de allerførste test, hvor jeg leder efter den bedste lys- og kameraopsætning, så miderne bliver nemme at se.
+            Det er stadig tidligt i projektet, men opløsningen ser lovende ud.
+          </p>
+
+          <h3>Sådan vil jeg gøre</h3>
+          <ul>
+            <li><strong>Stikprøver:</strong> starte med fx 100 bier i højsæsonen.</li>
+            <li><strong>Analyse:</strong> OpenCV finder bierne, YOLO spotter varroaerne.</li>
+            <li><strong>Lagring:</strong> resultater gemmes i en SQLite-database, så udviklingen kan følges over tid.</li>
+            <li><strong>Visning:</strong> når systemet kører, laver jeg et link til de billeder, hvor der er fundet varroa.</li>
+          </ul>
+
+          <p>
+            Målet er at opgradere til et bedre USB-makrokamera, men allerede nu kan jeg sidde hjemme og se mine bier flyve ind og ud.
+          </p>
+        </article>
+
+        <aside class="card col-4" aria-label="Projektstatus">
+          <div class="pill"><strong>Projektstatus</strong></div>
+          <div class="stat">
+            <span>Antal bifamilier</span>
+            <strong>2</strong>
+          </div>
+          <div class="stat">
+            <span>Systemfase</span>
+            <strong>Første kameratests</strong>
+          </div>
+          <div class="stat">
+            <span>Næste skridt</span>
+            <strong>OpenCV + YOLO + SQLite</strong>
+          </div>
+          <div class="stat">
+            <span>Plan for stikprøve</span>
+            <strong>~100 bier / højsæson</strong>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Kort FAQ / noter (valgfrit, men kort) -->
+      <section class="grid" aria-label="Noter">
+        <article class="card col-12">
+          <h3>Kort fortalt</h3>
+          <ul>
+            <li>Målet er automatisk at spotte varroa ved indflyvningen.</li>
+            <li>Kameratunnel giver kontrolleret lys og skarphed.</li>
+            <li>AI markerer mulige varroa-fund; data gemmes til senere gennemgang.</li>
+          </ul>
+          <p class="muted">*Projektet er løbende i udvikling. Denne side opdateres, efterhånden som resultaterne kommer ind.</p>
+        </article>
+      </section>
+
+      <!-- Kontakt -->
+      <section class="grid" id="kontakt" aria-label="Kontakt">
+        <article class="card col-12">
+          <h3>Kontakt</h3>
+          <p>
+            Har du input eller erfaring med automatisk insektdetektion? Skriv til mig:
+            <a href="mailto:carsten@elkjaerinnovation.com">carsten@elkjaerinnovation.com</a>
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div class="muted">
+        &copy; <span id="y"></span> Varroa-projektet • Denne side er statisk og hostes gratis.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // sæt årstal i footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
