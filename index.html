@@ -80,7 +80,18 @@
     .dot{width:10px; height:10px; border-radius:50%}
     .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
     footer{opacity:.8; font-size:14px; padding:32px 0 60px 0}
-    img{max-width:100%; border-radius:8px; margin-top:12px; box-shadow:0 2px 8px rgba(0,0,0,.3)}
+
+    /* Billede: skaler ned og centrer */
+    .img-small{
+      max-width: 420px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 12px auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+
     @media (min-width: 800px){.hero{padding:72px 56px 56px 56px}}
     @media (min-width: 900px){
       .col-8{grid-column: span 8}
@@ -123,7 +134,7 @@
             Jeg er i gang med at bygge et system, der kan genkende varroamider på bier ved stadeindgangen – men teknikken kunne også bruges til at opdage andre insekter, som fx den asiatiske hveps.
           </p>
 
-          <img src="bi.jpeg" alt="Billede af en bi fra de første kameratests" />
+          <img src="bi.jpeg" alt="Billede af en bi fra de første kameratests" class="img-small" loading="lazy" />
 
           <p>
             Bierne går igennem en lille tunnel, hvor jeg tager nærbilleder, og bagefter analyserer en computer billederne for mider.
@@ -165,7 +176,7 @@
         </aside>
       </section>
 
-      <!-- Kort FAQ / noter (valgfrit, men kort) -->
+      <!-- Kort FAQ / noter -->
       <section class="grid" aria-label="Noter">
         <article class="card col-12">
           <h3>Kort fortalt</h3>
@@ -203,4 +214,3 @@
   </script>
 </body>
 </html>
-
